@@ -1,11 +1,14 @@
 import React, {Component} from "react";
 
 import './Auth.css';
+import AuthContext from '../context/auth-context';
 
 class AuthPage extends Component {
     state = {
         isLogin: true
-    }
+    };
+
+    static contextType = AuthContext;
 
     constructor(props) {
         super(props);
@@ -53,49 +56,53 @@ class AuthPage extends Component {
             };
         }
 
-            fetch('http://localhost:8000/api', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => {
+        fetch('http://localhost:8000/api', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
                 if (res.status !== 200 && res.status !== 201) {
                     throw new Error('Failed!');
                 }
                 return res.json();
             })
-                .then(resData => {
-                    console.log(resData);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        }
-        ;
-
-        render()
-        {
-            return (
-                <form className="auth-form" onSubmit={this.submitHandler}>
-                    <div className="form-control">
-                        <label htmlFor="email">E-mail</label>
-                        <input type="email" id="email" ref={this.emailEl}/>
-                    </div>
-                    <div className="form-control">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" ref={this.passwordEl}/>
-                    </div>
-                    <div className="form-actions">
-                        <button type="input">Submit</button>
-                        <button type="button" onClick={this.switchModeHandler}>Switch
-                            to {this.state.isLogin ? 'Signup' : 'Login'}</button>
-                    </div>
-                </form>
-            );
-        }
+            .then(resData => {
+                if (this.state.isLogin) {
+                    this.context.login(
+                        resData.data.login.token,
+                        resData.data.login.userId,
+                        resData.data.login.tokenExpiration
+                    );
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
+    ;
 
-    export
-    default
-    AuthPage;
+    render() {
+        return (
+            <form className="auth-form" onSubmit={this.submitHandler}>
+                <div className="form-control">
+                    <label htmlFor="email">E-mail</label>
+                    <input type="email" id="email" ref={this.emailEl}/>
+                </div>
+                <div className="form-control">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" ref={this.passwordEl}/>
+                </div>
+                <div className="form-actions">
+                    <button type="input">Submit</button>
+                    <button type="button" onClick={this.switchModeHandler}>Switch
+                        to {this.state.isLogin ? 'Signup' : 'Login'}</button>
+                </div>
+            </form>
+        );
+    }
+}
+
+export default AuthPage;
