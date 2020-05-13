@@ -61,13 +61,16 @@ class BookingPage extends Component {
     deleteBookingHandler = bookingId => {
         const requestBody = {
             query: `
-                    mutation {
-                        cancelBooking(bookingId: "${bookingId}") {
+                    mutation CancelBooking($id: ID!) {
+                        cancelBooking(bookingId: $id) {
                         _id
                         title
                         }
                     }
-                `
+                `,
+            variables: {
+                id: bookingId
+            }
         };
 
         fetch('http://localhost:8000/api', {
@@ -80,7 +83,7 @@ class BookingPage extends Component {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.context.token
-                }
+                }//TODO: pouzi knihovnu
             }
         )
             .then(res => {
