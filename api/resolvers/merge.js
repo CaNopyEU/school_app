@@ -12,6 +12,18 @@ const userLoader = new DataLoader(userIds => {
     return User.find({_id: {$in: userIds}})
 });
 
+const users = async userIds => {
+    try {
+        const users = await User.find({_id: {$in: userIds}})
+        users.sort((a, b) => {
+            return (
+                userIds.indexOf(a._id.toString()) - userIds.index(b._id.toString())
+            )
+        })
+    } catch (err) {
+        throw err;
+    }
+}
 const events = async eventIds => {
     try {
         const events = await Event.find({_id: {$in: eventIds}})
@@ -37,7 +49,7 @@ const singleEvent = async eventId => {
     }
 }
 
-const user = async userId => {
+const singleUser = async userId => {
     try {
         const user = await userLoader.load(userId.toString());
         return {
@@ -48,11 +60,12 @@ const user = async userId => {
         throw err;
     }
 }
+
 const transformBooking = booking => {
     return {
         ...booking._doc,
         _id: booking.id,
-        user: user.bind(this, booking._doc.user),
+        user: singleUser.bind(this, booking._doc.user),
         event: singleEvent.bind(this, booking._doc.event),
         createdAt: dateToString(booking._doc.createdAt),
         updatedAt: dateToString(booking._doc.updatedAt)
@@ -64,13 +77,14 @@ const transformEvent = event => {
         ...event._doc,
         _id: event.id,
         date: dateToString(event._doc.date),
-        creator: user.bind(this, event.creator)
+        creator: singleUser.bind(this, event.creator)
     };
 };
 
 exports.transformEvent = transformEvent;
 exports.transformBooking = transformBooking;
 
-//exports.user = user;
+//exports.users = users;
+//exports.singleUser = user;
 //exports.events = events;
 //exports.singleEvent = singleEvent;
