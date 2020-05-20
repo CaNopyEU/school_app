@@ -4,6 +4,7 @@ const bookingResolver = require('./booking');
 const userResolver = require('./users');
 const classResolver = require('./classes');
 const lectureResolver = require('./lectures');
+const homeworkResolver = require('./homeworks');
 
 const rootResolver = {
     ...authResolver,
@@ -11,7 +12,8 @@ const rootResolver = {
     ...bookingResolver,
     ...userResolver,
     ...classResolver,
-    ...lectureResolver
+    ...lectureResolver,
+    ...homeworkResolver
 };
 
 module.exports = rootResolver;

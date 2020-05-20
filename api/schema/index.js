@@ -28,7 +28,7 @@ module.exports = buildSchema(`
                 email: String
                 city: String!
                 street: String!
-                phone: String
+                phone: Float
                 date: String
                 additionalData: String
             }
@@ -43,6 +43,14 @@ module.exports = buildSchema(`
             type Lecture {
                 _id: ID!
                 lecture: String!
+            }
+            
+            type Homework {
+                _id: ID!
+                title: String!
+                createdAt: String!
+                finishAt: String!
+                desc: String!
             }
             
             type AuthData {
@@ -67,7 +75,7 @@ module.exports = buildSchema(`
                 email: String
                 city: String!
                 street: String!
-                phone: String
+                phone: Float
                 date: String
                 additionalData: String 
             }
@@ -82,7 +90,15 @@ module.exports = buildSchema(`
                 lecture: String!
             }
             
+            input HomeworkInput {
+                title: String!
+                createdAt: String!
+                finishAt: String!
+                desc: String!
+            }
+            
             type RootQuery {
+                homeworks: [Homework!]!
                 lectures: [Lecture!]!
                 classes: [Class!]!
                 events: [Event!]!
@@ -92,6 +108,7 @@ module.exports = buildSchema(`
             }
             
             type RootMutation {
+                createHomework(homeworkInput: HomeworkInput): Homework
                 createLecture(lectureInput: LectureInput): Lecture
                 createClass(classInput: ClassInput): Class
                 createEvent(eventInput: EventInput): Event

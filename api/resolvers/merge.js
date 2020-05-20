@@ -4,6 +4,7 @@ const Class = require('../../models/class');
 const Event = require('../../models/event');
 const User = require('../../models/user');
 const Lecture = require('../../models/lecture');
+const Homework = require('../../models/homework');
 
 const {dateToString} = require('../../helpers/date');
 
@@ -21,6 +22,10 @@ const classLoader = new DataLoader(classIds => {
 
 const lectureLoader = new DataLoader(lectureIds => {
     return Lecture.find({_id: {$in: lectureIds}})
+});
+
+const homeworkLoader = new DataLoader(homeworkIds => {
+    return Homework.find({_id: {$in: homeworkIds}})
 });
 
 const users = async userIds => {
@@ -43,6 +48,22 @@ const classes = async classIds => {
                 classIds.indexOf(a._id.toString()) - classIds.index(b._id.toString())
             )
         })
+    } catch (err) {
+        throw err;
+    }
+}
+
+const homeworks = async homeworkIds => {
+    try {
+        const homeworks = await Homework.find({_id: {$in: homeworkIds}})
+        homeworks.sort((a, b) => {
+            return (
+                homeworkIds.indexOf(a._id.toString()) - homeworkIds.index(b._id.toString())
+            )
+        });
+        return homeworks.map(homework => {
+            return transformHomework(homework);
+        });
     } catch (err) {
         throw err;
     }
@@ -130,9 +151,22 @@ const transformEvent = event => {
     };
 };
 
+const transformHomework = homework => {
+    return {
+        ...homework._doc,
+        _id: homework.id,
+        title: homework.title,
+        createdAt: dateToString(homework._doc.createdAt),
+        finishAt: dateToString(homework._doc.finishAt),
+        desc: homework.desc
+    }
+}
+
 exports.transformEvent = transformEvent;
 exports.transformBooking = transformBooking;
+exports.transformHomework = transformHomework;
 
+//exports.homeworks = homework;
 //exports.lectures = lecture;
 //exports.classes = class;
 //exports.users = users;
