@@ -23,6 +23,10 @@ class Users extends Component {
                     query {
                         users {
                             _id
+                            username
+                            first
+                            last
+                            privilege
                             email
                         }
                     }
@@ -55,7 +59,6 @@ class Users extends Component {
     }
 
     render() {
-        console.log(this.state.users)
         return (
             <>
                 {this.state.isLoading ? <Spinner/> : <UsersList users={this.state.users} />}

@@ -1,5 +1,6 @@
 const DataLoader = require('dataloader');
 
+const Class = require('../../models/class');
 const Event = require('../../models/event');
 const User = require('../../models/user');
 const {dateToString} = require('../../helpers/date');
@@ -12,12 +13,28 @@ const userLoader = new DataLoader(userIds => {
     return User.find({_id: {$in: userIds}})
 });
 
+const classLoader = new DataLoader(classIds => {
+    return Class.find({_id: {$in: classIds}})
+});
+
 const users = async userIds => {
     try {
         const users = await User.find({_id: {$in: userIds}})
         users.sort((a, b) => {
             return (
                 userIds.indexOf(a._id.toString()) - userIds.index(b._id.toString())
+            )
+        })
+    } catch (err) {
+        throw err;
+    }
+}
+const classes = async classIds => {
+    try {
+        const classes = await Class.find({_id: {$in: classIds}})
+        classes.sort((a, b) => {
+            return (
+                classIds.indexOf(a._id.toString()) - classIds.index(b._id.toString())
             )
         })
     } catch (err) {
@@ -60,6 +77,19 @@ const singleUser = async userId => {
         throw err;
     }
 }
+/*
+const singleClass = async classId => {
+    try {
+        const singleClass = await classLoader.load(classId.toString());
+        return {
+            ...singleClass._doc,
+            createdEvents: () => eventLoader.loadMany(user._doc.createdEvents)
+        };
+    } catch (err) {
+        throw err;
+    }
+}
+*/
 
 const transformBooking = booking => {
     return {
@@ -84,6 +114,7 @@ const transformEvent = event => {
 exports.transformEvent = transformEvent;
 exports.transformBooking = transformBooking;
 
+//exports.classes = class;
 //exports.users = users;
 //exports.singleUser = user;
 //exports.events = events;

@@ -1,4 +1,4 @@
-.users__list-item {
+.user__list-item {
     margin: 1rem 0;
     padding: 1rem;
     border: 1px solid #4aa1ff;
@@ -7,18 +7,17 @@
     align-items: center;
 }
 
-.users__list-item h1 {
-    margin: 0;
-    font-size: 1.5rem;
+.user__list-item td {
+    width: 15%;
     color: #356fff;
 }
 
-.users__list-item h2 {
+.user__list-item h2 {
     margin: 0;
     font-size: 1rem;
     color: #4e5164;
 }
 
-.users__list-item p {
+.user__list-item p {
     margin: 0;
 }

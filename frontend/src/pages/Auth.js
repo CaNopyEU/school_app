@@ -12,8 +12,12 @@ class AuthPage extends Component {
 
     constructor(props) {
         super(props);
-        this.emailEl = React.createRef();
+        this.usernameEl = React.createRef();
         this.passwordEl = React.createRef();
+        this.firstEl = React.createRef();
+        this.lastEl = React.createRef();
+        this.privilegeEl = React.createRef();
+        this.emailEl = React.createRef();
 
     }
 
@@ -25,17 +29,21 @@ class AuthPage extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        const email = this.emailEl.current.value;
+        const username = this.usernameEl.current.value;
         const password = this.passwordEl.current.value;
+        const first = this.firstEl.current.value;
+        const last = this.lastEl.current.value;
+        const privilege = this.privilegeEl.current.value;
+        const email = this.emailEl.current.value;
 
-        if (email.trim().length === 0 || password.trim().length === 0) {
+        if (username.trim().length === 0 || password.trim().length === 0) {
             return;
         }
 
         let requestBody = {
             query: `
-                query Login($email: String!, $password: String!) {
-                    login(email: $email, password: $password) {
+                query Login($username: String!, $password: String!) {
+                    login(username: $username, password: $password) {
                         userId
                         token
                         tokenExpiration
@@ -43,7 +51,7 @@ class AuthPage extends Component {
                 }
             `,
             variables: {
-                email: email,
+                username: username,
                 password: password
             }
         };
@@ -51,16 +59,20 @@ class AuthPage extends Component {
         if (!this.state.isLogin) {
             requestBody = {
                 query: `
-                    mutation CreateUser($email: String!, $password: String!) {
-                        createUser(userInput: {email: $email, password: $password}) {
+                    mutation CreateUser($username: String!, $password: String!, $first: String!, $last: String!, $privilege: String!, $email: String!) {
+                        createUser(userInput: {username: $username, password: $password, first: $first, last: $last, privilege: $privilege, email: $email}) {
                             _id
-                            email
+                            username
                         }
                     }
                 `,
                 variables: {
+                    username: username,
+                    password: password,
+                    first: first,
+                    last: last,
                     email: email,
-                    password: password
+                    privilege: privilege
                 }
             };
         }
@@ -96,13 +108,39 @@ class AuthPage extends Component {
         return (
             <form className="auth-form" onSubmit={this.submitHandler}>
                 <div className="form-control">
-                    <label htmlFor="email">E-mail</label>
-                    <input type="email" id="email" ref={this.emailEl}/>
+                    <label htmlFor="text">Username</label>
+                    <input type="text" id="text" ref={this.usernameEl}/>
                 </div>
                 <div className="form-control">
                     <label htmlFor="password">Password</label>
                     <input type="password" id="password" ref={this.passwordEl}/>
                 </div>
+                {
+                    !this.state.isLogin &&
+                    <>
+                        <div className="form-control">
+                            <label htmlFor="first">First Name</label>
+                            <input type="text" id="first" ref={this.firstEl}/>
+                        </div>
+                        <div className="form-control">
+                            <label htmlFor="last">Last Name</label>
+                            <input type="text" id="last" ref={this.lastEl}/>
+                        </div>
+                        <div className="form-control">
+                            <label htmlFor="email">Email</label>
+                            <input type="email" id="email" ref={this.emailEl}/>
+                        </div>
+                        <div className="form-control">
+                            <label htmlFor="privileges">Privileges</label>
+                            <select id="privileges" ref={this.privilegeEl}>
+                                <option value="admin">Admin</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="student">Student</option>
+                            </select>
+                        </div>
+
+                    </>
+                }
                 <div className="form-actions">
                     <button type="input">Submit</button>
                     <button type="button" onClick={this.switchModeHandler}>Switch

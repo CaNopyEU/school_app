@@ -11,11 +11,26 @@ const userList = props => {
             <UserItem
                 key={user._id}
                 userId={user._id}
+                username={user.username}
                 email={user.email}
+                first={user.first}
+                last={user.last}
+                privilege={user.privilege}
             />
         )
     })
-    return <ul className="user__list">{users}</ul>
+    return (
+        <table className="users__list">
+            <tr className="users__list-item">
+                <th>Prihlasovacie meno:</th>
+                <th>Email:</th>
+                <th>Meno:</th>
+                <th>Priezvisko:</th>
+                <th>Oprávnenie:</th>
+                <th>Detail:</th>
+            </tr>
+            {users}
+        </table>)
 };
 
 export default userList;
