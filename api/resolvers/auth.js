@@ -18,8 +18,13 @@ module.exports = {
                 first: args.userInput.first,
                 last: args.userInput.last,
                 privilege: args.userInput.privilege,
-                email: args.userInput.email
-        });
+                email: args.userInput.email,
+                city: args.userInput.city,
+                street: args.userInput.street,
+                phone: args.userInput.phone,
+                date: new Date(args.userInput.date),
+                additionalData: args.userInput.additionalData
+            });
             const result = await user.save();
             return {
                 ...result._doc,
@@ -30,7 +35,7 @@ module.exports = {
         }
     },
     login: async ({username, password}) => {
-        const user =  await User.findOne({ username: username});
+        const user = await User.findOne({username: username});
         if (!user) {
             throw new Error('User does not exist!');
         }
@@ -46,8 +51,8 @@ module.exports = {
             {
                 expiresIn: '1h'
             }
-            );
-        return { userId: user.id, token: token, tokenExpiration: 1 }
+        );
+        return {userId: user.id, token: token, tokenExpiration: 1}
     }
 
 };

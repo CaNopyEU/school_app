@@ -19,50 +19,34 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-/*    date: {
-        type: Date,
-        required: true
-    },*/
     privilege: {
         type: String,
         required: true
     },
     email: {
         type: String,
-        required: true
-    },
-    /*
-    additional informations
-    class: {
-        type: String,
-        required: false
-    },
-    year: {
-        type: Number,
-        required: false
-    },
-    parentName: {
-        type: String,
         required: false
     },
     city: {
         type: String,
-        required: false
+        required: true
     },
     street: {
         type: String,
+        required: true
+    },
+    phone: {
+        type: String,
         required: false
     },
-    number: {
-        type: Number,
+    date: {
+        type: Date,
         required: false
-    },*/
-    createdEvents: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Event'
-        }
-    ]
+    },
+    additionalData: {
+        type: String,
+        required: false
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

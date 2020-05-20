@@ -1,4 +1,4 @@
-const { buildSchema } = require('graphql');
+const {buildSchema} = require('graphql');
 
 module.exports = buildSchema(`
             type Booking {
@@ -25,8 +25,12 @@ module.exports = buildSchema(`
                 first: String!
                 last: String!
                 privilege: String!
-                email: String!
-                createdEvents: [Event!]
+                email: String
+                city: String!
+                street: String!
+                phone: String
+                date: String
+                additionalData: String
             }
             
             type Class {
@@ -60,7 +64,12 @@ module.exports = buildSchema(`
                 first: String!
                 last: String!
                 privilege: String!
-                email: String!             
+                email: String
+                city: String!
+                street: String!
+                phone: String
+                date: String
+                additionalData: String 
             }
             
             input ClassInput {
