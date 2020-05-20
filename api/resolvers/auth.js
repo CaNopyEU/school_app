@@ -21,7 +21,7 @@ module.exports = {
                 email: args.userInput.email,
                 city: args.userInput.city,
                 street: args.userInput.street,
-                phone: args.userInput.phone,
+                phone: +args.userInput.phone,
                 date: new Date(args.userInput.date),
                 additionalData: args.userInput.additionalData
             });

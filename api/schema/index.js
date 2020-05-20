@@ -53,6 +53,11 @@ module.exports = buildSchema(`
                 desc: String!
             }
             
+            type Grade {
+                _id: ID!
+                grade: Int!
+            }
+            
             type AuthData {
                 userId: ID!
                 token: String!
@@ -97,7 +102,12 @@ module.exports = buildSchema(`
                 desc: String!
             }
             
+            input GradeInput {
+                grade: Int!
+            }
+            
             type RootQuery {
+                grades: [Grade!]!
                 homeworks: [Homework!]!
                 lectures: [Lecture!]!
                 classes: [Class!]!
@@ -108,6 +118,7 @@ module.exports = buildSchema(`
             }
             
             type RootMutation {
+                createGrade(gradeInput: GradeInput): Grade
                 createHomework(homeworkInput: HomeworkInput): Homework
                 createLecture(lectureInput: LectureInput): Lecture
                 createClass(classInput: ClassInput): Class

@@ -5,6 +5,7 @@ const Event = require('../../models/event');
 const User = require('../../models/user');
 const Lecture = require('../../models/lecture');
 const Homework = require('../../models/homework');
+const Grade = require('../../models/grade');
 
 const {dateToString} = require('../../helpers/date');
 
@@ -26,6 +27,10 @@ const lectureLoader = new DataLoader(lectureIds => {
 
 const homeworkLoader = new DataLoader(homeworkIds => {
     return Homework.find({_id: {$in: homeworkIds}})
+});
+
+const gradeLoader = new DataLoader(gradeIds => {
+    return Grade.find({_id: {$in: gradeIds}})
 });
 
 const users = async userIds => {
@@ -81,6 +86,20 @@ const lectures = async lectureIds => {
         throw err;
     }
 }
+
+const grades = async gradeIds => {
+    try {
+        const grades = await Grade.find({_id: {$in: gradeIds}})
+        grades.sort((a, b) => {
+            return (
+                gradeIds.indexOf(a._id.toString()) - gradeIds.index(b._id.toString())
+            )
+        })
+    } catch (err) {
+        throw err;
+    }
+}
+
 const events = async eventIds => {
     try {
         const events = await Event.find({_id: {$in: eventIds}})
