@@ -36,6 +36,11 @@ module.exports = buildSchema(`
                 schedule: String!             
             }
             
+            type Lecture {
+                _id: ID!
+                lecture: String!
+            }
+            
             type AuthData {
                 userId: ID!
                 token: String!
@@ -64,7 +69,12 @@ module.exports = buildSchema(`
                 schedule: String!
             }
             
+            input LectureInput {
+                lecture: String!
+            }
+            
             type RootQuery {
+                lectures: [Lecture!]!
                 classes: [Class!]!
                 events: [Event!]!
                 bookings: [Booking!]!
@@ -73,6 +83,7 @@ module.exports = buildSchema(`
             }
             
             type RootMutation {
+                createLecture(lectureInput: LectureInput): Lecture
                 createClass(classInput: ClassInput): Class
                 createEvent(eventInput: EventInput): Event
                 createUser(userInput: UserInput): User
