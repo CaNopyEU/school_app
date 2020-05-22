@@ -95,6 +95,11 @@ module.exports = buildSchema(`
                 lecture: String!
             }
             
+            input LectureUpdate {
+                id: ID
+                lecture: String!
+            }
+            
             input HomeworkInput {
                 title: String!
                 createdAt: String!
@@ -126,6 +131,12 @@ module.exports = buildSchema(`
                 createUser(userInput: UserInput): User
                 bookEvent(eventId: ID!): Booking!
                 cancelBooking(bookingId: ID!): Event!
+                deleteUser(userId: ID!): User!
+                deleteLecture(lectureId: ID!): Lecture!
+                deleteHomework(homeworkId: ID!): Homework!
+                deleteGrade(gradeId: ID!): Grade!
+                deleteClass(classId: ID!): Class!
+                updateLecture(lectureInput: LectureUpdate): Lecture
             }
             
             schema {

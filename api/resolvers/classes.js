@@ -31,4 +31,15 @@ module.exports = {
             throw err;
         }
     },
+    deleteClass: async (args, req) => {
+        /*if (!req.isAuth) {
+            throw new Error('Unauthenticated!');
+        }*/
+        try {
+            await Class.deleteOne({ _id: args.classId });
+            return true;
+        } catch (err) {
+            throw err;
+        }
+    }
 }

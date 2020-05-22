@@ -1,7 +1,4 @@
-const Event = require('../../models/event');
 const User = require('../../models/user');
-const { transformUser } = require('./merge');
-
 
 module.exports = {
     users: async (args, req) => {
@@ -19,17 +16,15 @@ module.exports = {
             throw err;
         }
     },
-    /*deleteUser: async (args, req) => {
-        if (!req.isAuth) {
+    deleteUser: async (args, req) => {
+        /*if (!req.isAuth) {
             throw new Error('Unauthenticated!');
-        }
+        }*/
         try {
-            const booking = await Booking.findById(args.bookingId).populate('event');
-            const  event = transformEvent(booking.event);
             await User.deleteOne({ _id: args.userId });
-            return event;
+            return true;
         } catch (err) {
             throw err;
         }
-    }*/
+    }
 };

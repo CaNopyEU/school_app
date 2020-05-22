@@ -18,6 +18,25 @@ module.exports = {
             throw err;
         }
     },
+    updateLecture: async (args, req) => {
+        try {
+            const doc = await Lecture.findById({ _id: args.lectureInput.id });
+            const update = { lecture: args.lectureInput.lecture };
+            const result = await doc.updateOne(update);
+            return result
+            /*
+            const result = await Lecture.updateOne({
+                _id: ObjectId("5ec70098b3a23048ec798dff")
+            },{
+                $set: {
+                    lecture: "asfasfa"
+                }
+            });
+            ;
+    */    } catch (err) {
+            throw err;
+        }
+    },
     lectures: async (args, req) => {
         /*
         TODO: uncomment when done / conditions etc.
@@ -33,4 +52,16 @@ module.exports = {
             throw err;
         }
     },
+    deleteLecture: async (args, req) => {
+        /*if (!req.isAuth) {
+            throw new Error('Unauthenticated!');
+        }*/
+        try {
+            console.log(args);
+            await Lecture.deleteOne({_id: args.lectureId});
+            return true;
+        } catch (err) {
+            throw err;
+        }
+    }
 }

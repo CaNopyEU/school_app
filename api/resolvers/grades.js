@@ -29,4 +29,15 @@ module.exports = {
             throw err;
         }
     },
+    deleteGrade: async (args, req) => {
+        /*if (!req.isAuth) {
+            throw new Error('Unauthenticated!');
+        }*/
+        try {
+            await Grade.deleteOne({ _id: args.gradeId });
+            return true;
+        } catch (err) {
+            throw err;
+        }
+    }
 }

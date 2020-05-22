@@ -33,4 +33,15 @@ module.exports = {
             throw err;
         }
     },
+    deleteHomework: async (args, req) => {
+        /*if (!req.isAuth) {
+            throw new Error('Unauthenticated!');
+        }*/
+        try {
+            await Homework.deleteOne({ _id: args.homeworkId });
+            return true;
+        } catch (err) {
+            throw err;
+        }
+    }
 }
