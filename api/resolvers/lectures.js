@@ -20,20 +20,12 @@ module.exports = {
     },
     updateLecture: async (args, req) => {
         try {
-            const doc = await Lecture.findById({ _id: args.lectureInput.id });
-            const update = { lecture: args.lectureInput.lecture };
-            const result = await doc.updateOne(update);
+            const doc = await Lecture.findById({_id: args.lectureInput.id});
+            const update = {lecture: args.lectureInput.lecture};
+            await doc.updateOne(update);
+            const result = await  Lecture.findById({_id: args.lectureInput.id});
             return result
-            /*
-            const result = await Lecture.updateOne({
-                _id: ObjectId("5ec70098b3a23048ec798dff")
-            },{
-                $set: {
-                    lecture: "asfasfa"
-                }
-            });
-            ;
-    */    } catch (err) {
+        } catch (err) {
             throw err;
         }
     },

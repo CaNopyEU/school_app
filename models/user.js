@@ -19,7 +19,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    privilege: {
+    role: {
         type: String,
         required: true
     },

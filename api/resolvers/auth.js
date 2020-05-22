@@ -17,7 +17,7 @@ module.exports = {
                 password: hashedPassword,
                 first: args.userInput.first,
                 last: args.userInput.last,
-                privilege: args.userInput.privilege,
+                role: args.userInput.role,
                 email: args.userInput.email,
                 city: args.userInput.city,
                 street: args.userInput.street,
@@ -45,7 +45,8 @@ module.exports = {
         }
         const token = jwt.sign({
                 userId: user.id,
-                username: user.username
+                username: user.username,
+                role: user.role
             },
             'somesupersecretkey',
             {

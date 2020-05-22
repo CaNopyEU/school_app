@@ -16,7 +16,7 @@ class AuthPage extends Component {
         this.passwordEl = React.createRef();
         this.firstEl = React.createRef();
         this.lastEl = React.createRef();
-        this.privilegeEl = React.createRef();
+        this.roleEl = React.createRef();
         this.emailEl = React.createRef();
 
     }
@@ -33,7 +33,7 @@ class AuthPage extends Component {
         const password = this.passwordEl.current.value;
         const first = this.firstEl.current.value;
         const last = this.lastEl.current.value;
-        const privilege = this.privilegeEl.current.value;
+        const role = this.roleEl.current.value;
         const email = this.emailEl.current.value;
 
         if (username.trim().length === 0 || password.trim().length === 0) {
@@ -59,8 +59,8 @@ class AuthPage extends Component {
         if (!this.state.isLogin) {
             requestBody = {
                 query: `
-                    mutation CreateUser($username: String!, $password: String!, $first: String!, $last: String!, $privilege: String!, $email: String!) {
-                        createUser(userInput: {username: $username, password: $password, first: $first, last: $last, privilege: $privilege, email: $email}) {
+                    mutation CreateUser($username: String!, $password: String!, $first: String!, $last: String!, $role: String!, $email: String!) {
+                        createUser(userInput: {username: $username, password: $password, first: $first, last: $last, role: $role, email: $email}) {
                             _id
                             username
                         }
@@ -72,7 +72,7 @@ class AuthPage extends Component {
                     first: first,
                     last: last,
                     email: email,
-                    privilege: privilege
+                    role: role
                 }
             };
         }
@@ -131,8 +131,8 @@ class AuthPage extends Component {
                             <input type="email" id="email" ref={this.emailEl}/>
                         </div>
                         <div className="form-control">
-                            <label htmlFor="privileges">Privileges</label>
-                            <select id="privileges" ref={this.privilegeEl}>
+                            <label htmlFor="role">Privileges</label>
+                            <select id="role" ref={this.roleEl}>
                                 <option value="admin">Admin</option>
                                 <option value="teacher">Teacher</option>
                                 <option value="student">Student</option>

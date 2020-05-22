@@ -24,7 +24,7 @@ module.exports = buildSchema(`
                 password: String!
                 first: String!
                 last: String!
-                privilege: String!
+                role: String!
                 email: String
                 city: String!
                 street: String!
@@ -76,7 +76,7 @@ module.exports = buildSchema(`
                 password: String!
                 first: String!
                 last: String!
-                privilege: String!
+                role: String!
                 email: String
                 city: String!
                 street: String!
@@ -96,7 +96,7 @@ module.exports = buildSchema(`
             }
             
             input LectureUpdate {
-                id: ID
+                id: ID!
                 lecture: String!
             }
             
