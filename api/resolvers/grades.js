@@ -29,6 +29,18 @@ module.exports = {
             throw err;
         }
     },
+    updateGrade: async (args, req) => {
+        try {
+            console.log(args)
+            return await Grade.findOneAndUpdate({
+                _id: args._id
+            }, JSON.parse(JSON.stringify(args.gradeInput)),{
+                new: true
+            })
+        } catch (err) {
+            throw err;
+        }
+    },
     deleteGrade: async (args, req) => {
         /*if (!req.isAuth) {
             throw new Error('Unauthenticated!');

@@ -34,6 +34,17 @@ module.exports = {
             throw err;
         }
     },
+    updateUser: async (args, req) => {
+        try {
+            return await User.findOneAndUpdate({
+                _id: args._id
+            }, JSON.parse(JSON.stringify(args.userInput)),{
+                new: true
+            })
+        } catch (err) {
+            throw err;
+        }
+    },
     login: async ({username, password}) => {
         const user = await User.findOne({username: username});
         if (!user) {

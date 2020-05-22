@@ -20,11 +20,11 @@ module.exports = {
     },
     updateLecture: async (args, req) => {
         try {
-            const doc = await Lecture.findById({_id: args.lectureInput.id});
-            const update = {lecture: args.lectureInput.lecture};
-            await doc.updateOne(update);
-            const result = await  Lecture.findById({_id: args.lectureInput.id});
-            return result
+            return await Lecture.findOneAndUpdate({
+                _id: args._id
+            }, JSON.parse(JSON.stringify(args.lectureInput)),{
+                new: true
+            })
         } catch (err) {
             throw err;
         }

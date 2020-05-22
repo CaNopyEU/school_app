@@ -31,6 +31,17 @@ module.exports = {
             throw err;
         }
     },
+    updateClass: async (args, req) => {
+        try {
+            return await Class.findOneAndUpdate({
+                _id: args._id
+            }, JSON.parse(JSON.stringify(args.classInput)),{
+                new: true
+            })
+        } catch (err) {
+            throw err;
+        }
+    },
     deleteClass: async (args, req) => {
         /*if (!req.isAuth) {
             throw new Error('Unauthenticated!');

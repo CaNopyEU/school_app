@@ -18,6 +18,17 @@ module.exports = {
             throw err;
         }
     },
+    updateHomework: async (args, req) => {
+        try {
+            return await Homework.findOneAndUpdate({
+                _id: args._id
+            }, JSON.parse(JSON.stringify(args.homeworkInput)),{
+                new: true
+            })
+        } catch (err) {
+            throw err;
+        }
+    },
     homeworks: async (args, req) => {
         /*
         TODO: uncomment when done / conditions etc.

@@ -91,15 +91,6 @@ module.exports = buildSchema(`
                 schedule: String!
             }
             
-            input LectureInput {
-                lecture: String!
-            }
-            
-            input LectureUpdate {
-                id: ID!
-                lecture: String!
-            }
-            
             input HomeworkInput {
                 title: String!
                 createdAt: String!
@@ -111,6 +102,45 @@ module.exports = buildSchema(`
                 grade: Int!
             }
             
+            input LectureInput {
+                lecture: String!
+            }
+            
+            input UserUpdate {
+                username: String
+                password: String
+                first: String
+                last: String
+                role: String
+                email: String
+                city: String
+                street: String
+                phone: Float
+                date: String
+                additionalData: String 
+            }
+            
+            input LectureUpdate {
+                lecture: String
+            }
+            
+            input GradeUpdate {
+                grade: Int
+            }
+            
+            input HomeworkUpdate {
+                title: String
+                createdAt: String
+                finishAt: String
+                desc: String
+            }
+            
+            input ClassUpdate {
+                class: String
+                year: Int
+                schedule: String
+            }
+                      
             type RootQuery {
                 grades: [Grade!]!
                 homeworks: [Homework!]!
@@ -136,7 +166,11 @@ module.exports = buildSchema(`
                 deleteHomework(homeworkId: ID!): Homework!
                 deleteGrade(gradeId: ID!): Grade!
                 deleteClass(classId: ID!): Class!
-                updateLecture(lectureInput: LectureUpdate): Lecture
+                updateLecture(_id: ID!, lectureInput: LectureUpdate): Lecture
+                updateUser(_id: ID!, userInput: UserUpdate): User
+                updateHomework(_id: ID!, homeworkInput: HomeworkUpdate): Homework
+                updateGrade(_id: ID!, gradeInput: GradeUpdate): Grade
+                updateClass(_id: ID!, classInput: ClassUpdate): Class
             }
             
             schema {
